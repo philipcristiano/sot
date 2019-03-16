@@ -10,3 +10,7 @@ rel/example_project
 .concrete/DEV_MODE
 .rebar
 log/
+nonode@nohost
+tmp/
+elvis
+sot.d
