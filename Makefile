@@ -16,8 +16,17 @@ dep_ra = git https://github.com/rabbitmq/ra 584ab4e9119595185d166cbb437d72a7befd
 
 DEP_PLUGINS = cowboy elvis_mk
 
-SHELL_OPTS = -eval "application:ensure_all_started(sot)"
+SHELL_GEN_OPTS = -eval "application:ensure_all_started(sot)" -config sys
+SHELL_OPTS = $(SHELL_GEN_OPTS) -config sys
+COOKIE = sotshell
 CT_OPTS ?= -create_priv_dir auto_per_tc
+
+shell_1: build-shell-deps
+	$(gen_verbose) $(SHELL_ERL) -pa $(SHELL_PATHS) $(SHELL_GEN_OPTS) -name shell_1 -setcookie $(COOKIE)
+shell_2: build-shell-deps
+	$(gen_verbose) $(SHELL_ERL) -pa $(SHELL_PATHS) $(SHELL_GEN_OPTS) -name shell_2 -setcookie $(COOKIE)
+shell_3: build-shell-deps
+	$(gen_verbose) $(SHELL_ERL) -pa $(SHELL_PATHS) $(SHELL_GEN_OPTS) -name shell_3 -setcookie $(COOKIE)
 
 # OmniOS build/packaging
 BUILDDIR = build
