@@ -4,7 +4,7 @@ PROJECT_VERSION = 0.0.1
 
 BUILD_DEPS = elvis_mk
 TEST_DEPS = meck
-DEPS = cowboy jsx lager ra
+DEPS = cowboy jsx lager ra pd_config
 LOCAL_DEPS = sasl
 
 dep_cowboy_commit = 2.5.0
@@ -13,20 +13,21 @@ dep_elvis_mk = git https://github.com/inaka/elvis.mk.git 1.0.0
 dep_lager = git https://github.com/erlang-lager/lager.git 3.4.1
 dep_meck = git https://github.com/eproxus/meck.git 0.8.12
 dep_ra = git https://github.com/rabbitmq/ra 584ab4e9119595185d166cbb437d72a7befde50d # master as of 2019-03-12
+dep_pd_config = git https://github.com/philipcristiano/pd_config.git v0.0.1
 
 DEP_PLUGINS = cowboy elvis_mk
 
-SHELL_GEN_OPTS = -eval "application:ensure_all_started(sot)" -config sys
+SHELL_GEN_OPTS = -eval "application:ensure_all_started(sot)"
 SHELL_OPTS = $(SHELL_GEN_OPTS) -config sys
 COOKIE = sotshell
 CT_OPTS ?= -create_priv_dir auto_per_tc
 
 shell_1: build-shell-deps
-	$(gen_verbose) $(SHELL_ERL) -pa $(SHELL_PATHS) $(SHELL_GEN_OPTS) -name shell_1 -setcookie $(COOKIE)
+	$(gen_verbose) $(SHELL_ERL) -pa $(SHELL_PATHS) $(SHELL_GEN_OPTS) -config shell_1 -name shell_1 -setcookie $(COOKIE)
 shell_2: build-shell-deps
-	$(gen_verbose) $(SHELL_ERL) -pa $(SHELL_PATHS) $(SHELL_GEN_OPTS) -name shell_2 -setcookie $(COOKIE)
+	$(gen_verbose) $(SHELL_ERL) -pa $(SHELL_PATHS) $(SHELL_GEN_OPTS) -config shell_2 -name shell_2 -setcookie $(COOKIE)
 shell_3: build-shell-deps
-	$(gen_verbose) $(SHELL_ERL) -pa $(SHELL_PATHS) $(SHELL_GEN_OPTS) -name shell_3 -setcookie $(COOKIE)
+	$(gen_verbose) $(SHELL_ERL) -pa $(SHELL_PATHS) $(SHELL_GEN_OPTS) -config shell_3 -name shell_3 -setcookie $(COOKIE)
 
 # OmniOS build/packaging
 BUILDDIR = build
